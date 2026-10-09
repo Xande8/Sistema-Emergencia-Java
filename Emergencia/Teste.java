@@ -4,13 +4,11 @@ public class Teste {
 
     public static void main(String[] args) {
 
-        // Criando um paciente
         Paciente paciente = new Paciente(
             "12345678900",
             "João da Silva"
         );
 
-        // Criando os medicamentos
         Medicamento dipirona = new Medicamento(
             1,
             "Dipirona"
@@ -21,18 +19,15 @@ public class Teste {
             "Paracetamol"
         );
 
-        // Criando o atendimento
         Atendimento atendimento = new Atendimento(
             1,
             "08/10/2026",
             paciente
         );
 
-        // Adicionando os medicamentos ao atendimento
         atendimento.adicionarMedicamento(dipirona);
         atendimento.adicionarMedicamento(paracetamol);
 
-        // Exibindo os dados
         System.out.println("===== SISTEMA DE EMERGÊNCIA =====");
 
         System.out.println("\nPaciente:");
