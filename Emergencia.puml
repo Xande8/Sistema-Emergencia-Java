@@ -1,0 +1,27 @@
+@startuml Emergencia
+
+title Sistema de Emergência - Diagrama de Classes
+
+class Paciente {
+    - cpf : String
+    - nome : String
+    - listaAtendimento : List<Atendimento>
+}
+
+class Atendimento {
+    - id : int
+    - data : String
+    - paciente : Paciente
+    - listaMedicamento : List<Medicamento>
+}
+
+class Medicamento {
+    - id : int
+    - nome : String
+    - listaAtendimento : List<Atendimento>
+}
+
+Paciente "1" -- "0..*" Atendimento : possui
+Atendimento "0..*" -- "0..*" Medicamento : utiliza
+
+@enduml
