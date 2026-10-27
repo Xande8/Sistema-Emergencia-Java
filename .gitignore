@@ -1,0 +1,11 @@
+*.db4o
+*.db4o.lock
+*.db4o.bak
+
+bin/
+*.class
+
+.vscode/launch.json
+
+*.log
+*.tmp

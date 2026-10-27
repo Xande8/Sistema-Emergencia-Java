@@ -1,61 +1,25 @@
-# Sistema de Emergência
+# Sistema de Emergencia - Etapa 2 (POO 2026.2)
 
-## 1. Descrição
+IFPB Joao Pessoa - Prof. Fausto Ayres
 
-Este projeto foi desenvolvido como atividade acadêmica com o objetivo de aplicar conceitos de Programação Orientada a Objetos e modelagem UML na representação de um sistema de emergência.
+## Requisitos
+- `src/modelo`: Paciente, Atendimento e Medicamento (modelagem da etapa 1).
+- `src/appconsole`: Cadastrar, Listar, Alterar e Apagar.
+- `src/util`: Util e GeradorID **adaptados do exemplo AgendaCompromisso-db4o fornecido pelo professor**.
+- Banco principal `emergencia.db4o`; banco auxiliar automatico `sequencia.db4o` (contador de IDs).
+- Datas representadas por `String`. IDs numericos de Atendimento e Medicamento atribuidos pelo trigger do professor.
+- `toString()` mostra os vinculos sem recursao e a listagem usa `forEach` sem laco `for` explicito.
 
-O sistema representa pacientes, atendimentos e medicamentos, estabelecendo associações entre essas entidades por meio de classes Java.
+## Executar pelo VS Code
+1. Abrir esta pasta com Extension Pack for Java instalado.
+2. Confirmar JDK instalado (testado em Java 21) e bibliotecas `lib/` carregadas automaticamente por `.vscode/settings.json`.
+3. Executar, na ordem: `appconsole.Cadastrar`, `appconsole.Listar`, `appconsole.Alterar`, `appconsole.Listar`, `appconsole.Apagar`, `appconsole.Listar`.
+4. Para reiniciar o demonstrativo, com o programa fechado, apagar **ambos** `emergencia.db4o` e `sequencia.db4o` (e possiveis arquivos de backup relacionados). Nunca apagar so o banco de sequencias se ainda houver dados cadastrados.
 
-## 2. Modelagem UML
-
-O diagrama de classes foi elaborado utilizando PlantUML e representa os atributos e os relacionamentos entre as classes do sistema.
-
-Foram definidos os seguintes relacionamentos:
-
-* **Paciente e Atendimento:** um paciente pode possuir nenhum ou vários atendimentos, enquanto cada atendimento está associado a um paciente.
-* **Atendimento e Medicamento:** um atendimento pode estar associado a vários medicamentos, e um medicamento pode estar relacionado a vários atendimentos.
-
-O diagrama está disponível na pasta `UML`, nos formatos `.puml`, `.svg` e `.pdf`.
-
-## 3. Classes do sistema
-
-### Paciente
-
-Armazena o CPF e o nome do paciente, além de manter uma lista dos atendimentos associados a ele.
-
-### Atendimento
-
-Armazena o identificador e a data do atendimento, a referência ao paciente correspondente e a lista de medicamentos utilizados.
-
-### Medicamento
-
-Armazena o identificador e o nome do medicamento, além de manter uma lista dos atendimentos aos quais está associado.
-
-### Teste
-
-Contém o método `main`, responsável por instanciar os objetos e demonstrar, em memória, os relacionamentos entre pacientes, atendimentos e medicamentos.
-
-## 4. Tecnologias e conceitos utilizados
-
-* Java;
-* Programação Orientada a Objetos;
-* Classes, objetos, atributos e métodos;
-* Listas utilizando `ArrayList` e `List`;
-* Associações entre objetos;
-* UML e PlantUML.
-
-## 5. Estrutura do projeto
-
-```text
-Sistema-Emergencia-Java/
-├── Emergencia/
-│   ├── Atendimento.java
-│   ├── Medicamento.java
-│   ├── Paciente.java
-│   └── Teste.java
-├── UML/
-│   ├── Emergencia.puml
-│   ├── Emergencia.svg
-│   └── Emergencia.pdf
-└── README.md
-```
+## Observacoes
+- `Cadastrar` e uma demonstracao com dados fixos, nao um menu interativo; nao duplica registros caso o banco tenha objetos.
+- `Alterar` remove um vinculo Atendimento-Dipirona; `Apagar` remove Joao e os atendimentos associados, preservando os medicamentos.
+- O gerador de IDs fornecido pelo professor foi preservado em sua logica; apenas o `for` de procura de campo foi convertido a Stream e `getFirst` a `get(0)` para portabilidade.
+- `Util` foi adaptada nas configuracoes das classes e nome do arquivo principal; restante segue o exemplo da aula.
+- `GeradorID` do exemplo requer tambem a biblioteca db4o client-server para compilacao, mesmo usando o banco local.
+- O arquivo UML e o material da primeira etapa estao em `UML/` como referencia.
