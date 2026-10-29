@@ -18,6 +18,12 @@ public class TesteRelacionamentos {
         atendimento.adicionarMedicamento(dipirona);
         validar(atendimento.getListaMedicamento().size() == 1, "Medicamento duplicado no atendimento");
         validar(dipirona.getListaAtendimento().contains(atendimento), "Associação inversa ausente");
+        validar(atendimento.toString().contains("Medicamentos: [Dipirona]"),
+                "toString de Atendimento nao exibe os medicamentos");
+        validar(joao.toString().contains("Atendimentos: ["),
+                "toString de Paciente nao exibe os atendimentos");
+        validar(dipirona.toString().contains("Atendimentos: ["),
+                "toString de Medicamento nao exibe os atendimentos");
         atendimento.removerMedicamento(dipirona);
         validar(atendimento.getListaMedicamento().isEmpty(), "Medicamento não desvinculado");
         validar(dipirona.getListaAtendimento().isEmpty(), "Associação inversa não desvinculada");
