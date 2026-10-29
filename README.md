@@ -35,3 +35,33 @@ A apresentacao segue a sequencia `Cadastrar -> Listar -> Alterar -> Listar -> Ap
 | Pedro | Avancado | `Apagar.java`, persistencia Db4o, `Util.java` e `GeradorID.java`; exclusao sem deixar referencias inconsistentes. |
 
 **Roteiro de demonstracao:** Alexandre executa cadastro e listagem inicial; Igor demonstra a alteracao seguida de nova listagem; Pedro executa a exclusao e confirma o estado final com outra listagem. Reiniciar `emergencia.db4o` e `sequencia.db4o` antes da apresentacao, com os programas fechados, caso queiram repetir o cadastro desde o inicio.
+
+
+## IDs automaticos e Db4o
+
+O Db4o armazena os objetos e dispara o evento `creating()` quando um objeto novo e persistido. A classe `util.GeradorID`, fornecida no exemplo de aula, escuta esse evento e preenche automaticamente o atributo `int id` das classes `Atendimento` e `Medicamento`. O controle da numeracao e armazenado em `sequencia.db4o`. Nao atribuimos IDs manualmente nos construtores nem em `Cadastrar.java`.
+
+A classe `Paciente` mantem o CPF como identificacao, de acordo com a modelagem da primeira etapa. Os IDs internos usados pelo proprio Db4o sao diferentes dos IDs numericos da aplicacao. Os metodos `toString()` apenas mostram o ID ja gerado, sem criar nem alterar identificadores.
+
+**Verificacao:** no teste com Java 21, um `Atendimento` e um `Medicamento` novos apresentavam `getId() == 0` antes do salvamento e passaram a receber IDs numericos positivos apos `manager.store()` e `manager.commit()`.
+
+## Executar no GitHub Codespaces
+
+O arquivo `.devcontainer/devcontainer.json` seleciona Java 21 e instala a extensao **Extension Pack for Java** (`vscjava.vscode-java-pack`). A pasta `lib/` e reconhecida pelo `.vscode/settings.json`.
+
+1. No GitHub: **Code > Codespaces > Create codespace on main**. Se voce ja tinha um Codespace aberto antes desta configuracao, use **Codespaces: Rebuild Container** para aplicar o Java 21.
+2. No terminal Linux do Codespaces, execute os comandos a seguir, um de cada vez:
+
+```bash
+java -version
+mkdir -p bin
+javac -encoding UTF-8 -cp "lib/*" -d bin $(find src -name "*.java")
+java -cp "bin:lib/*" appconsole.Cadastrar
+java -cp "bin:lib/*" appconsole.Listar
+java -cp "bin:lib/*" appconsole.Alterar
+java -cp "bin:lib/*" appconsole.Listar
+java -cp "bin:lib/*" appconsole.Apagar
+java -cp "bin:lib/*" appconsole.Listar
+```
+
+O primeiro cadastro cria `emergencia.db4o` e `sequencia.db4o` no diretorio de execucao. Os bancos estao no `.gitignore` e nao sao enviados ao GitHub. Para reiniciar a demonstracao, feche todos os programas Java e apague **ambos** os arquivos de banco antes de executar `Cadastrar` novamente.
