@@ -32,5 +32,13 @@ public class Atendimento {
         medicamento.getListaAtendimento().remove(this);
     }
     @Override
-    public String toString() { return "Atendimento ID: " + id + " | Data: " + data; }
+    public String toString() {
+        String medicamentos = listaMedicamento.stream()
+                .map(Medicamento::getNome)
+                .sorted()
+                .collect(java.util.stream.Collectors.joining(", "));
+        return "Atendimento: " + id + " | Data: " + data
+                + " | Paciente: " + (paciente == null ? "Nao associado" : paciente.getNome())
+                + " | Medicamentos: [" + medicamentos + "]";
+    }
 }
