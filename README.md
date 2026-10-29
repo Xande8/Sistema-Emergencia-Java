@@ -23,3 +23,15 @@ IFPB Joao Pessoa - Prof. Fausto Ayres
 - `Util` foi adaptada nas configuracoes das classes e nome do arquivo principal; restante segue o exemplo da aula.
 - `GeradorID` do exemplo requer tambem a biblioteca db4o client-server para compilacao, mesmo usando o banco local.
 - O arquivo UML e o material da primeira etapa estao em `UML/` como referencia.
+
+## Divisao da apresentacao (Pedro, Igor e Alexandre)
+
+A apresentacao segue a sequencia `Cadastrar -> Listar -> Alterar -> Listar -> Apagar -> Listar`.
+
+| Integrante | Nivel | Responsabilidade |
+|---|---|---|
+| Alexandre | Facil | Introducao ao sistema, classes de negocio, `Cadastrar.java`, `Listar.java` e exibicao via `toString()`. |
+| Igor | Intermediario | `Alterar.java` e relacionamento entre Atendimento e Medicamento: remover o vinculo sem excluir objetos. |
+| Pedro | Avancado | `Apagar.java`, persistencia Db4o, `Util.java` e `GeradorID.java`; exclusao sem deixar referencias inconsistentes. |
+
+**Roteiro de demonstracao:** Alexandre executa cadastro e listagem inicial; Igor demonstra a alteracao seguida de nova listagem; Pedro executa a exclusao e confirma o estado final com outra listagem. Reiniciar `emergencia.db4o` e `sequencia.db4o` antes da apresentacao, com os programas fechados, caso queiram repetir o cadastro desde o inicio.
