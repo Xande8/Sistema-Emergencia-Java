@@ -18,5 +18,13 @@ public class Paciente {
         if (atendimento != null && atendimento.getPaciente() == this) atendimento.setPaciente(null);
     }
     @Override
-    public String toString() { return "Paciente: " + nome + " | CPF: " + cpf; }
+    public String toString() {
+        String atendimentos = listaAtendimento.stream()
+                .map(Atendimento::getId)
+                .sorted()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(", "));
+        return "Paciente: " + nome + " | CPF: " + cpf
+                + " | Atendimentos: [" + atendimentos + "]";
+    }
 }
