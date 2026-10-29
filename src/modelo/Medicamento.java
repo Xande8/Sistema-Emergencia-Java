@@ -18,5 +18,13 @@ public class Medicamento {
         if (atendimento != null) atendimento.removerMedicamento(this);
     }
     @Override
-    public String toString() { return "Medicamento: " + nome + " | ID: " + id; }
+    public String toString() {
+        String atendimentos = listaAtendimento.stream()
+                .map(Atendimento::getId)
+                .sorted()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(", "));
+        return "Medicamento: " + nome + " | ID: " + id
+                + " | Atendimentos: [" + atendimentos + "]";
+    }
 }
