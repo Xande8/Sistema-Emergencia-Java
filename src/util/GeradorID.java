@@ -17,7 +17,6 @@ import com.db4o.query.Query;
 public class GeradorID {
 	private static ObjectContainer sequencia; 
 
-	@SuppressWarnings("unused")
 	static void ativar(ObjectContainer manager) {
 		if (manager == null)
 			throw new RuntimeException("Não pode ativar GeradorID - manager desconectado"); // desativado
@@ -36,13 +35,9 @@ public class GeradorID {
 			try {
 				Object objeto = args.object(); 
 				Class<?> classe = objeto.getClass();
-				Field campo = null;
-				for (Field f : getAllFieldsList(classe)) {
-					if (f.getName().equals("id")) {
-						campo = f;
-						break;
-					}
-				}
+				Field campo = getAllFieldsList(classe).stream()
+						.filter(f -> f.getName().equals("id"))
+						.findFirst().orElse(null);
 
 				if (campo != null) { 
 					Class<?> cls = objeto.getClass();
