@@ -9,6 +9,7 @@ import com.db4o.config.EmbeddedConfiguration;
 import modelo.Paciente;
 import modelo.Atendimento;
 import modelo.Medicamento;
+import modelo.MedicamentoControlado;
 
 public class Util {
 	private static ObjectContainer manager;
@@ -41,6 +42,9 @@ public class Util {
 		config.common().objectClass(Medicamento.class).cascadeOnDelete(false);
 		config.common().objectClass(Medicamento.class).cascadeOnUpdate(true);
 		config.common().objectClass(Medicamento.class).cascadeOnActivate(true);
+		config.common().objectClass(MedicamentoControlado.class).cascadeOnDelete(false);
+		config.common().objectClass(MedicamentoControlado.class).cascadeOnUpdate(true);
+		config.common().objectClass(MedicamentoControlado.class).cascadeOnActivate(true);
 		config.common().activationDepth(Integer.MAX_VALUE); // profundidade de ativacao para acessar os objetos
 
 		try {
