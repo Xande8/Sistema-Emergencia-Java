@@ -1,5 +1,6 @@
 import modelo.Atendimento;
 import modelo.Medicamento;
+import modelo.MedicamentoControlado;
 import modelo.Paciente;
 
 public class TesteRelacionamentos {
@@ -36,6 +37,25 @@ public class TesteRelacionamentos {
         validar(joao.toString().contains("João"), "Representação de paciente inválida");
         validar(atendimento.toString().contains("29/10/2026"), "Representação de atendimento inválida");
         validar(dipirona.toString().contains("Dipirona"), "Representação de medicamento inválida");
-        System.out.println("Testes de relacionamentos concluídos com sucesso.");
+        MedicamentoControlado controlado = new MedicamentoControlado("Morfina", "CRM-PB 12345");
+        validar(controlado instanceof Medicamento, "MedicamentoControlado nao herda de Medicamento");
+        validar("CRM-PB 12345".equals(controlado.getCrm()), "Getter de CRM incorreto");
+        validar(controlado.toString().contains("CRM: CRM-PB 12345"), "toString nao exibe o CRM");
+        validar(controlado.toString().contains("Medicamento: Morfina"),
+                "toString nao reutiliza a representacao da superclasse");
+
+        Atendimento atendimentoControlado = new Atendimento("30/10/2026", maria);
+        atendimentoControlado.adicionarMedicamento(controlado);
+        validar(atendimentoControlado.getListaMedicamento().contains(controlado),
+                "Vinculo com atendimento ausente");
+        validar(controlado.getListaAtendimento().contains(atendimentoControlado),
+                "Vinculo inverso ausente");
+        atendimentoControlado.removerMedicamento(controlado);
+        validar(!atendimentoControlado.getListaMedicamento().contains(controlado),
+                "Vinculo nao removido do atendimento");
+        validar(!controlado.getListaAtendimento().contains(atendimentoControlado),
+                "Vinculo inverso nao removido");
+
+        System.out.println("Testes de relacionamentos e heranca concluidos com sucesso.");
     }
 }
