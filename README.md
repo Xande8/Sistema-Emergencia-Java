@@ -22,7 +22,7 @@ IFPB Joao Pessoa - Prof. Fausto Ayres
 - O gerador de IDs fornecido pelo professor foi preservado em sua logica; apenas o `for` de procura de campo foi convertido a Stream e `getFirst` a `get(0)` para portabilidade.
 - `Util` foi adaptada nas configuracoes das classes e nome do arquivo principal; restante segue o exemplo da aula.
 - `GeradorID` do exemplo requer tambem a biblioteca db4o client-server para compilacao, mesmo usando o banco local.
-- O diagrama textual `UML/Emergencia.puml` inclui a heranca do Projeto 2. Os arquivos `UML/Emergencia.svg` e `UML/Emergencia.pdf` ainda sao da etapa anterior: nao foram regenerados porque o PlantUML nao estava disponivel no ambiente de edicao.
+- O diagrama textual `UML/Emergencia.puml` e os arquivos `UML/Emergencia.svg` e `UML/Emergencia.pdf` foram atualizados com a heranca do Projeto 2 no Codespaces usando PlantUML e librsvg.
 
 ## Divisao da apresentacao (Pedro, Igor e Alexandre)
 
@@ -94,7 +94,7 @@ Executar **`java -cp "bin:lib/*" appconsole.Cadastrar`** no terminal do Codespac
 
 As operacoes usam `manager.store(...)` e `manager.commit()`. O usuario nunca digita um ID novo: os IDs numericos sao gerados pelo `GeradorID` ativado pela conexao Db4o. CPF deve ter 11 digitos; isso e uma verificacao de formato, nao uma validacao matematica de CPF. Datas permanecem armazenadas como texto. A listagem usa `toString()` e `forEach`, sem `for` explicito.
 
-**Atenção:** se tiver usado o Codespaces antes dessa atualizacao, execute `git pull origin main` no terminal do Codespace ou recrie-o. Nao execute `Listar` enquanto o menu `Cadastrar` estiver aberto, pois ambos podem tentar acessar o mesmo arquivo Db4o.
+**Atenção:** no Codespaces, confira a branch ativa com `git branch --show-current` e atualize-a com `git pull origin $(git branch --show-current)`. Nao execute `Listar` enquanto o menu `Cadastrar` estiver aberto, pois ambos podem tentar acessar o mesmo arquivo Db4o.
 
 ## Projeto 2 — Subclasse MedicamentoControlado
 
@@ -118,4 +118,11 @@ Para testar o ciclo de demonstracao **em um diretorio sem bancos anteriores**, e
 
 Para testar a **opcao 7**, execute `Cadastrar`, digite 7, informe nome e CRM, e encerre com 0. Em outra execucao, rode `Listar` para comprovar a persistencia.
 
-**Nota sobre o UML:** edite ou visualize `UML/Emergencia.puml` para ver a heranca atualizada. Os arquivos SVG e PDF versionados ainda nao foram atualizados.
+**UML atualizado:** `UML/Emergencia.puml`, `UML/Emergencia.svg` e `UML/Emergencia.pdf` incluem a heranca de `MedicamentoControlado`.
+
+### Validacao no Codespaces (26/11/2026)
+
+- Compilacao das classes e teste de relacionamentos e heranca: sucesso.
+- Cadastro demonstrativo, Listar, Alterar, Listar, Apagar e Listar: sucesso.
+- Opcao 7: Clonazepam com CRM de teste cadastrado com ID 5, presente apos fechar e reabrir o banco.
+- `GeradorID.java` permanece inalterado. Arquivos `.db4o` e `bin/` nao foram enviados.
