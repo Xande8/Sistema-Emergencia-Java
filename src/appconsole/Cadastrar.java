@@ -3,6 +3,7 @@ package appconsole;
 import com.db4o.ObjectContainer;
 import modelo.Atendimento;
 import modelo.Medicamento;
+import modelo.MedicamentoControlado;
 import modelo.Paciente;
 import util.Util;
 
@@ -33,6 +34,7 @@ public class Cadastrar {
                 System.out.println("4 - Cadastrar atendimento");
                 System.out.println("5 - Associar medicamento a atendimento");
                 System.out.println("6 - Consultar objetos cadastrados");
+                System.out.println("7 - Cadastrar medicamento controlado");
                 System.out.println("0 - Sair");
                 opcao = Entrada.numero("Escolha uma opcao: ");
 
@@ -43,6 +45,7 @@ public class Cadastrar {
                     case 4 -> cadastrarAtendimento(manager);
                     case 5 -> associarMedicamento(manager);
                     case 6 -> listar(manager);
+                    case 7 -> cadastrarMedicamentoControlado(manager);
                     case 0 -> System.out.println("Cadastro encerrado.");
                     default -> System.out.println("Opcao invalida.");
                 }
@@ -57,7 +60,7 @@ public class Cadastrar {
                 || !manager.query(Atendimento.class).isEmpty()
                 || !manager.query(Medicamento.class).isEmpty()) {
             System.out.println("O banco ja possui objetos. Cadastro demonstrativo nao repetido.");
-            System.out.println("Use as opcoes 2 a 5 para adicionar novos registros.");
+            System.out.println("Use as opcoes 2 a 5 e 7 para adicionar novos registros.");
             return;
         }
 
@@ -68,6 +71,7 @@ public class Cadastrar {
         Medicamento dipirona = new Medicamento("Dipirona");
         Medicamento soro = new Medicamento("Soro fisiologico");
         Medicamento paracetamol = new Medicamento("Paracetamol");
+        MedicamentoControlado morfina = new MedicamentoControlado("Morfina", "CRM-PB 12345");
 
         Atendimento a1 = new Atendimento("27/10/2026", joao);
         Atendimento a2 = new Atendimento("27/10/2026", maria);
@@ -79,6 +83,7 @@ public class Cadastrar {
         a2.adicionarMedicamento(dipirona);
         a3.adicionarMedicamento(paracetamol);
         a4.adicionarMedicamento(soro);
+        a4.adicionarMedicamento(morfina);
 
         manager.store(joao);
         manager.store(maria);
@@ -90,8 +95,9 @@ public class Cadastrar {
         manager.store(dipirona);
         manager.store(soro);
         manager.store(paracetamol);
+        manager.store(morfina);
         manager.commit();
-        System.out.println("Cadastro concluido: 3 pacientes, 4 atendimentos e 3 medicamentos.");
+        System.out.println("Cadastro concluido: 3 pacientes, 4 atendimentos e 4 medicamentos (1 controlado).");
     }
 
     private static void cadastrarPaciente(ObjectContainer manager) {
@@ -117,6 +123,15 @@ public class Cadastrar {
         manager.store(medicamento);
         manager.commit();
         System.out.println("Medicamento salvo no Db4o: " + medicamento);
+    }
+
+    private static void cadastrarMedicamentoControlado(ObjectContainer manager) {
+        String nome = Entrada.texto("Nome do medicamento controlado: ");
+        String crm = Entrada.texto("CRM: ");
+        MedicamentoControlado medicamento = new MedicamentoControlado(nome, crm);
+        manager.store(medicamento);
+        manager.commit();
+        System.out.println("Medicamento controlado salvo no Db4o: " + medicamento);
     }
 
     private static void cadastrarAtendimento(ObjectContainer manager) {
