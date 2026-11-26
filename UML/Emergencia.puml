@@ -21,7 +21,13 @@ class Medicamento {
     - listaAtendimento : List<Atendimento>
 }
 
+class MedicamentoControlado {
+    - crm : String
+    + getCrm() : String
+}
+
 Paciente "1" -- "0..*" Atendimento : possui
 Atendimento "0..*" -- "0..*" Medicamento : utiliza
+MedicamentoControlado --|> Medicamento
 
 @enduml
